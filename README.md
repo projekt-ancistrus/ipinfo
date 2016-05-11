@@ -1,2 +1,4 @@
 # ipinfo
-Website that shows the user's IP, Browser and Operating System
+
+Website that shows the user's IP, Browser and Operating System.
+
