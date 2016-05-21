@@ -1,0 +1,78 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Serif+Pro|Source+Sans+Pro|Inconsolata&subset=latin,latin-ext);
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	margin: 0;
+	padding: 0;
+}
+body {
+	margin: 0;
+	padding: 0;
+	background: #EDEBE6;
+	font: 18px "Source Serif Pro", serif;
+	color: #403B33;
+}
+
+a:link,
+a:visited {
+	color: #A40114;
+}
+a:hover,
+a:active {
+	color: #94C7B6;
+}
+.text-center {
+	text-align: center;
+	margin-bottom: 8em;
+}
+
+h1 {
+	margin: 0;
+	padding: 14px 10px 10px;
+	text-align: center;
+	border-bottom: 4px solid #94c7b6;
+	background: #94c7b6;
+}
+h1 a:link, h1 a:visited {
+	color: #403B33;
+	text-decoration: none;
+}
+h1 a:hover, h1 a:active {
+	/*color: #94c7b6;*/
+	text-decoration: underline;
+}
+h2 {
+	font: 1.6em "Source Sans Pro", sans-serif;
+	font-weight: normal;
+}
+main {
+	margin: 1em .5em 2em;
+}
+@media (min-width: 800px) {
+	main {
+		margin-left: auto;
+		margin-right: auto;
+		width: 600px;
+	}
+}
+
+main h3 {
+	font: 1.3em "Source Sans Pro", sans-serif;
+	font-weight: normal;
+}
+
+footer {
+	font: 0.7em "Inconsolata", monospace;
+	text-align: center;
+}
+footer p {
+	margin: .5em 0;
+}
+/*footer a:link,
+footer a:visited {
+	color: #403B33;
+	text-decoration: underline;
+}*/
