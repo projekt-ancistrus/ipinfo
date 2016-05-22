@@ -45,10 +45,10 @@ class ClientInfo {
 			$ua = $this->getUserAgent();
 			
 			if (stripos($ua, "Firefox") !== false) {
-				$this->browser = "Firefox";
+				$this->browser = "Mozilla Firefox";
 				$pos_version_start = stripos(
-				$ua,
-				"Firefox/"
+					$ua,
+					"Firefox/"
 				) + strlen("Firefox/");
 				
 				$version = substr($ua, $pos_version_start);
@@ -56,7 +56,41 @@ class ClientInfo {
 				$this->browser .= " " . $version;
 				
 			} elseif (stripos($ua, "MSIE") !== false) {
-				$this->browser = "Internet Explorer";
+				$this->browser = "Microsoft Internet Explorer";
+				$pos_version_start = stripos(
+					$ua,
+					"MSIE"
+				) + strlen("MSIE ");
+				$pos_version_end = stripos(
+					$ua,
+					";",
+					$pos_version_start
+				);
+				
+				$version = substr(
+					$ua,
+					$pos_version_start,
+					$pos_version_end - $pos_version_start
+				);
+				
+				$this->browser .= " " . $version;
+				
+			} elseif (stripos($ua, "OPR") !== false) {
+				$this->browser = "Opera";
+				$pos_version_start = stripos(
+					$ua,
+					"OPR/"
+				) + strlen("OPR/");
+				$version = explode(
+					".",
+					substr(
+						$ua,
+						$pos_version_start
+					)
+				);
+				
+				$this->browser .= " " . $version[0] . "." . $version[1];
+				
 			} elseif (stripos($ua, "Chrome") !== false) {
 				$this->browser = "Google Chrome";
 				$pos_version_start = stripos(
@@ -78,6 +112,27 @@ class ClientInfo {
 				);
 				$version = $version[0] . "." . $version[1];
 				$this->browser .= " " . $version;
+				
+			} else if (stripos($ua, "Safari") !== false) {
+				$this->browser = "Apple Safari";
+				$pos_version_start = stripos(
+					$ua,
+					"Version/"
+				) + strlen("Version/");
+				$pos_version_end = stripos(
+					$ua,
+					" ",
+					$pos_version_start
+				);
+				
+				$version = substr(
+					$ua,
+					$pos_version_start,
+					$pos_version_end - $pos_version_start
+				);
+				
+				$this->browser .= " " . $version;
+				
 			} else {
 				$this->browser = "Unknown";
 			}
@@ -112,14 +167,70 @@ class ClientInfo {
 				);
 			} elseif (stripos($ua, "FreeBSD") !== false) {
 				$this->OS = "FreeBSD";
+				
 			} elseif (stripos($ua, "OpenBSD") !== false) {
 				$this->OS = "OpenBSD";
+				
 			} elseif (stripos($ua, "Windows") !== false) {
 				$this->OS = "MS Windows";
+				
+				if (stripos($ua, "Windows NT 10.0") !== false || stripos($ua, "Windows 10") !== false) {
+					$this->os .= " 10";
+				} else if (stripos($ua, "Windows NT 6.3") !== false || stripos($ua, "Windows 8.1") !== false) {
+					$this->os .= " 8.1";
+				} else if (stripos($ua, "Windows NT 6.2") !== false || stripos($ua, "Windows 8") !== false) {
+					$this->os .= " 8";
+				} else if (stripos($ua, "Windows NT 6.1") !== false || stripos($ua, "Windows 7") !== false) {
+					$this->os .= " 7";
+				} else if (stripos($ua, "Windows NT 6.0") !== false || stripos($ua, "Windows Vista") !== false) {
+					$this->os .= " Vista";
+				} else if (stripos($ua, "Windows NT 5.1") !== false || stripos($ua, "Windows XP") !== false) {
+					$this->os .= " XP";
+				}
+				
 			} elseif (stripos($ua, "Linux") !== false) {
 				$this->OS = "GNU/Linux";
+				
+			} elseif (stripos($ua, "Macintosh") !== false) {
+				$this->OS = "Apple OS X";
+				
+				$pos_version_start = stripos(
+					$ua,
+					"OS X"
+				) + strlen("OS X ");
+				$pos_version_bracket = stripos(
+					$ua,
+					")",
+					$pos_version_start
+				);
+				$pos_version_semicolon = stripos(
+					$ua,
+					";",
+					$pos_version_start
+				);
+				if ($pos_version_bracket > 1 && $pos_version_semicolon > 1) {
+					$pos_version_end = min(
+						$pos_version_bracket,
+						$pos_version_semicolon
+					);
+				} elseif ($pos_version_bracket > 1) {
+					$pos_version_end = $pos_version_bracket;
+				} else {
+					$pos_version_end = $pos_version_semicolon;
+				}
+				$version = explode(
+					"_",
+					substr(
+						$ua,
+						$pos_version_start,
+						$pos_version_end - $pos_version_start
+					)
+				);
+				
+				$this->OS .= " " . implode($version, ".");
 			} else {
 				$this->OS = "Unknown";
+				
 			}
 		}
 		
