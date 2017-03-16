@@ -5,10 +5,40 @@ require_once("clientinfo.class.php");
 
 $info = new ClientInfo();
 
-$hostTitle = "IP Address";
+$lang = substr(
+	$info->getLanguage(),
+	0,
+	2
+);
+function getMsg($lang, $id) {
+	$Translations = Array(
+		"de" => Array(
+			"Title"   => "Deine IP",
+			"IP"      => "IP-Adresse",
+			"Host"    => "Hostname",
+			"Browser" => "Browser",
+			"OS"      => "Betriebssystem",
+			"Lang"    => "Sprache",
+			"UA"      => "User-Agent"
+		),
+		"en" => Array(
+			"Title"   => "Your IP",
+			"IP"      => "IP Address",
+			"Host"    => "Host name",
+			"Browser" => "Browser",
+			"OS"      => "Operating System",
+			"Lang"    => "Language",
+			"UA"      => "User Agent"
+		)
+	);
+	
+	return $Translations[$lang][$id];
+}
+
+$hostTitle = getMsg($lang, "IP");
 $hostContent =$info->getIP();
 if ($info->getHostname() != $info->getIP()) {
-	$hostTitle .= " / Hostname";
+	$hostTitle .= " / " . getMsg($lang, "Host");
 	$hostContent .= " / " . $info->getHostname();
 }
 ob_start();
@@ -17,13 +47,17 @@ ob_start();
 <p>
 	<?=$hostContent?>
 </p>
-<h3>Browser</h3>
+<h3><?=getMsg($lang, "Browser")?></h3>
 <p>
 	<?=$info->getBrowser()?>
 </p>
-<h3>Operating System</h3>
+<h3><?=getMsg($lang, "OS")?></h3>
 <p>
-	<?=$info->getOS()?> (Language: <?=$info->getLanguage()?>)
+	<?=$info->getOS()?> (<?=getMsg($lang, "Lang")?>: <?=$info->getLanguage()?>)
+</p>
+<h3><?=getMsg($lang, "UA")?></h3>
+<p>
+	<?=$info->getUserAgent()?>
 </p>
 <?php
 
@@ -37,17 +71,17 @@ $footerData = Array(
 
 $Data = Array(
 	"Meta" => Array(
-		"Lang" => "en",
-		"Charset" => "UTF-8",
-		"Title" => "IP Info",
-		"Author" => "Malte Bublitz",
-		"HumansTXT" => false,
+		"Lang"       => $lang,
+		"Charset"    => "UTF-8",
+		"Title"      => getMsg($lang, "Title"),
+		"Author"     => "Malte Bublitz",
+		"HumansTXT"  => false,
 		"Stylesheet" => "assets/css/style.css"
 	),
 	"Content" => Array(
 		"Header" => Array(
 			"LinkURL" => "./",
-			"Title" => "IP Info"
+			"Title"   => getMsg($lang, "Title")
 		),
 		"Content" => $contentData,
 		"Footer" => $footerData
