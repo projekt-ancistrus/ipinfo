@@ -19,14 +19,19 @@ $footerData = Array(
 	'Powered by <a href="' . $AppInfo["URL"] . '">' . $AppInfo["Name"] . '</a>'
 );
 
-if (substr($info->getLanguage(), 0, 2) == "de") {
+$lang = substr(
+	$info->getLanguage(),
+	0,
+	2
+);
+if ($lang == "de") {
 	$msg_your_ip = "Deine IP–Adresse";
 } else {
 	$msg_your_ip = "Your IP";
 }
 $Data = Array(
 	"Meta" => Array(
-		"Lang" => "en",
+		"Lang" => $lang,
 		"Charset" => "UTF-8",
 		"Title" => $msg_your_ip . " :: " . $AppInfo["Name"],
 		"Author" => "Malte Bublitz",
