@@ -175,17 +175,17 @@ class ClientInfo {
 				$this->OS = "MS Windows";
 				
 				if (stripos($ua, "Windows NT 10.0") !== false || stripos($ua, "Windows 10") !== false) {
-					$this->os .= " 10";
+					$this->OS .= " 10";
 				} else if (stripos($ua, "Windows NT 6.3") !== false || stripos($ua, "Windows 8.1") !== false) {
-					$this->os .= " 8.1";
+					$this->OS .= " 8.1";
 				} else if (stripos($ua, "Windows NT 6.2") !== false || stripos($ua, "Windows 8") !== false) {
-					$this->os .= " 8";
+					$this->OS .= " 8";
 				} else if (stripos($ua, "Windows NT 6.1") !== false || stripos($ua, "Windows 7") !== false) {
-					$this->os .= " 7";
+					$this->OS .= " 7";
 				} else if (stripos($ua, "Windows NT 6.0") !== false || stripos($ua, "Windows Vista") !== false) {
-					$this->os .= " Vista";
+					$this->OS .= " Vista";
 				} else if (stripos($ua, "Windows NT 5.1") !== false || stripos($ua, "Windows XP") !== false) {
-					$this->os .= " XP";
+					$this->OS .= " XP";
 				}
 				
 			} elseif (stripos($ua, "Linux") !== false) {
