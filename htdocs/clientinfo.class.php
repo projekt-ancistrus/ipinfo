@@ -44,14 +44,37 @@ class ClientInfo {
 		if (empty($this->browser)) {
 			$ua = $this->getUserAgent();
 			
-			if (stripos($ua, "Firefox") !== false) {
+			if (stripos($ua, "PaleMoon") !== false) {
+				$this->browser = "Pale Moon";
+				$pos_version_start = stripos(
+					$ua,
+					"PaleMoon/"
+				) + strlen("PaleMoon/");
+				
+				$version = substr(
+					$ua,
+					$pos_version_start
+				);
+				
+				$this->browser .= " " . $version;
+				
+			} elseif (stripos($ua, "Firefox") !== false) {
 				$this->browser = "Mozilla Firefox";
 				$pos_version_start = stripos(
 					$ua,
 					"Firefox/"
 				) + strlen("Firefox/");
+				$pos_version_end = stripos(
+					$ua,
+					" ",
+					$pos_version_start
+				);
 				
-				$version = substr($ua, $pos_version_start);
+				$version = substr(
+					$ua,
+					$pos_version_start,
+					$pos_version_end - $pos_version_start
+				);
 				
 				$this->browser .= " " . $version;
 				
