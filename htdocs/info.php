@@ -5,6 +5,10 @@ require_once("clientinfo.class.php");
 
 $info = new ClientInfo();
 
+$hostContent =$info->getIP();
+if ($info->getHostname() != $info->getIP()) {
+	$hostContent .= " / " . $info->getHostname();
+}
 $lang = substr(
 	$info->getLanguage(),
 	0,
@@ -15,7 +19,6 @@ function getMsg($lang, $id) {
 		"de" => Array(
 			"Title"   => "Deine IP",
 			"IP"      => "IP-Adresse",
-			"Host"    => "Hostname",
 			"Browser" => "Browser",
 			"OS"      => "Betriebssystem",
 			"Lang"    => "Sprache",
@@ -24,7 +27,6 @@ function getMsg($lang, $id) {
 		"en" => Array(
 			"Title"   => "Your IP",
 			"IP"      => "IP Address",
-			"Host"    => "Host name",
 			"Browser" => "Browser",
 			"OS"      => "Operating System",
 			"Lang"    => "Language",
@@ -34,16 +36,9 @@ function getMsg($lang, $id) {
 	
 	return $Translations[$lang][$id];
 }
-
-$hostTitle = getMsg($lang, "IP");
-$hostContent =$info->getIP();
-if ($info->getHostname() != $info->getIP()) {
-	$hostTitle .= " / " . getMsg($lang, "Host");
-	$hostContent .= " / " . $info->getHostname();
-}
 ob_start();
 ?>
-<h3><?=$hostTitle?></h3>
+<h3><?=getMsg($lang, "IP")?></h3>
 <p>
 	<?=$hostContent?>
 </p>
